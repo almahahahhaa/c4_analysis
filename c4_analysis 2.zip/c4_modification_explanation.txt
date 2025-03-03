@@ -1,0 +1,26 @@
+Modification Explanation for C4 Compiler – Exponentiation Operator Support
+
+In this modified version of the C4 compiler, I added support for a new exponentiation operator, written as “**”. This operator allows expressions such as “2 ** 3” to be compiled and executed, yielding 8.
+
+Key Changes:
+1. Token and Opcode Definitions:
+   - In the tokens enum, a new token “Exp” was added after the “Mod” token to represent the “**” operator.
+   - In the opcodes enum, a new opcode “EXP” was added to denote the exponentiation operation during execution.
+
+2. Lexical Analysis (next() function):
+   - The branch handling the '*' character was modified to check if the next character is also '*'. If so, the code consumes both '*' characters and sets the token to Exp instead of Mul.
+
+3. Expression Parsing (expr() function):
+   - A new case was added in the binary operator processing loop for the Exp token.
+   - This branch emits the EXP opcode and recursively calls expr(Exp) to ensure right-associativity of exponentiation.
+
+4. Virtual Machine Execution (main() function):
+   - A new case in the instruction dispatch loop handles the EXP opcode.
+   - When EXP is encountered, the virtual machine pops the left operand (base) from the stack and uses the current value (exponent) to compute the result using exponentiation by squaring.
+
+Impact on Compiler Behavior:
+- With these changes, the compiler now accepts and correctly evaluates exponentiation expressions.
+- The modifications preserve the minimal and self-contained design of C4, while extending its arithmetic capabilities.
+- Users can now write expressions like “a = 2 ** 3;” in their C code, and the virtual machine will correctly compute the value 8.
+
+These changes demonstrate how small modifications can extend the functionality of a minimalist compiler like C4 without compromising its overall structure.

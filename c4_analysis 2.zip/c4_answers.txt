@@ -1,0 +1,26 @@
+1. What is the purpose of the next() function, and how does it contribute to the compilation process?
+
+The `next()` function serves as the lexical analyzer (lexer) in the C4 compiler. Its main purpose is to scan the source code character by character, identify syntactic elements, and convert them into tokens. These tokens represent identifiers, numbers, operators, keywords, and punctuation. By performing this tokenization, `next()` provides the parser with a clean and structured stream of tokens, which is essential for syntactic analysis and subsequent code generation.
+
+2. How does C4 handle symbol resolution (e.g., variables, functions)?
+
+C4 uses a simple symbol table, represented as an array of integers, to handle symbol resolution. When the lexer identifies an identifier (variable or function), it computes a hash based on the identifier’s characters. The compiler then searches the symbol table for an existing entry with a matching hash and name. If found, it reuses the symbol; if not, the new identifier is added to the table. This mechanism links each identifier with its type, memory location (for variables), or function entry point (for functions), enabling the compiler to resolve and reference symbols during parsing and code generation.
+
+3. What are the limitations of C4 as a compiler? What features of C does it not support?
+
+C4 is a minimalist compiler designed primarily for educational purposes, so it supports only a very limited subset of the C language. Its key limitations include:
+- Limited Data Types: It only supports basic types such as `int`, `char`, and pointers. It does not support floating-point numbers, structures, unions, or enums in a full-featured way.
+- Simplified Control Structures: It supports basic control flow constructs like `if`, `while`, and return statements, but lacks support for other loops (e.g., `for` or `do-while`), switch-case statements, and more advanced constructs.
+- No Advanced Error Recovery: The compiler does not include robust error handling or recovery mechanisms, which are essential in modern compilers.
+- Minimal Optimization:** C4 does not perform any significant code optimization; it simply translates code directly into a basic sequence of opcodes.
+- Limited Runtime Environment: Its virtual machine is very simple and does not support many runtime features found in full-scale compilers.
+These limitations make C4 unsuitable for compiling large or complex C programs but ideal for demonstrating the fundamentals of compiler design.
+
+4. How does C4 achieve self-hosting (i.e., compiling itself)? What are the implications of this design?
+
+C4 is designed to be self-hosting, meaning that it is written in the same subset of C that it compiles. The key to this self-hosting capability is its minimalism—by supporting only a small but sufficient subset of the C language, the compiler can be used to compile its own source code. This approach has several implications:
+- Bootstrapping: Once C4 is proven to work, it can compile subsequent versions of itself, ensuring that improvements or modifications can be tested in a self-contained manner.
+- Simplicity and Portability: The limited feature set helps keep the compiler simple and portable, making it easier to understand and modify.
+- Educational Value: The self-hosting design demonstrates an important principle in compiler construction—if a compiler can compile itself, it is a strong indication of its completeness and consistency.
+- Limitations in Expressiveness: However, because C4 only supports a minimal subset of C, it cannot compile fully featured C programs, which limits its practical use beyond educational purposes.
+  
